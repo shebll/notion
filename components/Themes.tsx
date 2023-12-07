@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
 type Theme = "dark" | "light" | "-";
+
 function Themes() {
   const [theme, setTheme] = useState<Theme>("-");
   const themeToggleHandle = () => {

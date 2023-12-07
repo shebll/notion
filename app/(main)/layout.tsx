@@ -4,6 +4,7 @@ import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 import React from "react";
 import Navigation from "./_components/navigation";
+import Image from "next/image";
 
 export default function MainLayout({
   children,
@@ -12,7 +13,11 @@ export default function MainLayout({
 }) {
   const { isAuthenticated, isLoading } = useConvexAuth();
   if (isLoading) {
-    return <div className="h-screen flex justify-center items-center">...</div>;
+    return (
+      <div className="h-screen flex justify-center items-center ">
+        <Image src={"/spinner.gif"} width={30} height={30} alt="spinner" />
+      </div>
+    );
   }
   if (!isAuthenticated) {
     redirect("/");

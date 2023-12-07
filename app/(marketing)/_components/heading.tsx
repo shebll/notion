@@ -3,7 +3,9 @@ import React from "react";
 import Button from "./button";
 import { useConvexAuth } from "convex/react";
 import { SignInButton } from "@clerk/clerk-react";
+
 import Link from "next/link";
+import Image from "next/image";
 
 function Heading() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -17,7 +19,11 @@ function Heading() {
         Jotion is the connected workspace where <br />
         better, faster work happens.
       </p>
-      {!isAuthenticated && isLoading && <Button buttonText={"....."} />}
+      {!isAuthenticated && isLoading && (
+        <div className="h-[44px] flex justify-center items-center">
+          <Image src={"/spinner.gif"} width={30} height={30} alt="spinner" />
+        </div>
+      )}
       {!isAuthenticated && !isLoading && (
         <SignInButton mode="modal">
           <p>
@@ -28,7 +34,7 @@ function Heading() {
       {isAuthenticated && !isLoading && (
         <Link
           href={"/documents"}
-          className="bg-slate-800 shadow-lg rounded-md text-white transition-all font-medium text-base sm:text-lg py-2 px-4 focus:scale-95  hover:scale-105 hover:bg-slate-900 dark:text-slate-800 dark:bg-gray-200 dark:hover:bg-gray-50"
+          className="bg-slate-800 shadow-lg rounded-md text-white transition-all font-medium text-base py-1 px-3 focus:scale-95  hover:scale-105 hover:bg-slate-900 dark:text-slate-800 dark:bg-gray-200 dark:hover:bg-gray-50"
         >
           Enter Jotion
         </Link>
