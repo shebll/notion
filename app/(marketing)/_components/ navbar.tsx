@@ -1,13 +1,10 @@
 "use client";
-import Themes from "@/components/Themes";
 import Link from "next/link";
 import Logo from "./logo";
-import Button from "./button";
 
 import { useScrollTop } from "@/hocks/use-scroll-top";
 import { useConvexAuth } from "convex/react";
 import { SignInButton, UserButton } from "@clerk/clerk-react";
-import Image from "next/image";
 
 function NavBar() {
   const { isLoading, isAuthenticated } = useConvexAuth();
@@ -21,17 +18,19 @@ function NavBar() {
       <Logo />
       <div className="flex flex-row gap-4 items-center">
         {isLoading && (
-          <div className="h-[44px] flex justify-center items-center">
-            <Image src={"/spinner.gif"} width={20} height={20} alt="spinner" />
+          <div className=" flex flex-row gap-4 items-center">
+            <div className="text-center bg-slate-600 shadow-lg rounded-md dark:bg-gray-200 h-[32px] w-[116.44px] cursor-wait text-white dark:text-gray-800 font-bold" />
+            <div className="w-8 h-8 rounded-full bg-gray-200 cursor-wait" />
           </div>
         )}
         {!isAuthenticated && !isLoading && (
           <SignInButton mode="modal">
-            <p>
-              <Button buttonText="LogIn" />
-            </p>
+            <button className="bg-slate-800 shadow-lg rounded-md text-white transition-all font-medium text-base py-1 px-3 focus:scale-95  hover:scale-105 hover:bg-slate-900 dark:text-slate-800 dark:bg-gray-200 dark:hover:bg-gray-50 h-[32px] w-[116.44px] ">
+              LogIn
+            </button>
           </SignInButton>
         )}
+
         {isAuthenticated && !isLoading && (
           <>
             <Link

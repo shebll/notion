@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { ElementRef, useRef, useState } from "react";
 
 import PopUp from "../../_components/PopUp";
-import Button from "@/app/(marketing)/_components/button";
 
 import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
@@ -62,7 +61,9 @@ function Documents() {
             Welcome to {user?.firstName}&apos; jotion
           </h2>
           <div onClick={PopUpHandle}>
-            <Button buttonText={"Make Note"} />
+            <button className="bg-slate-800 shadow-lg rounded-md text-white transition-all font-medium text-base py-1 px-3 focus:scale-95  hover:scale-105 hover:bg-slate-900 dark:text-slate-800 dark:bg-gray-200 dark:hover:bg-gray-50">
+              Make Note
+            </button>
           </div>
         </div>
       </div>
