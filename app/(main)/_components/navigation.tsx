@@ -1,11 +1,20 @@
 "use client";
-
+import React, { ElementRef, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import React, { ElementRef, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "usehooks-ts";
+
+import Item from "./Item";
 import UserItem from "./UserItem";
+import DocumentsPage from "./DocumentsPage";
 import Logo from "@/app/(marketing)/_components/logo";
+
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
+import { toast } from "sonner";
+import { useMediaQuery } from "usehooks-ts";
+import PopUp from "./PopUp";
+import Trash from "./Trash";
 
 function Navigation() {
   const pathname = usePathname();
@@ -13,10 +22,65 @@ function Navigation() {
 
   const sideBarRef = useRef<ElementRef<"aside">>(null);
   const navBarRef = useRef<ElementRef<"div">>(null);
+  const PopupRef = useRef<ElementRef<"div">>(null);
 
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapse, setIsCollapse] = useState(isMobile);
+  const [noteName, setNoteName] = useState<string>("");
 
+  const create = useMutation(api.documents.create);
+
+  const PopUpHandle = () => {
+    PopupRef.current!.style.transform = "scale(1)";
+    PopupRef.current!.parentElement!.style.display = "flex";
+    document.body.style.opacity = "0px";
+  };
+  const closePopup = () => {
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+  };
+  const createNote = (e: React.FormEvent<HTMLFormElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setNoteName("");
+    const promise = create({ title: noteName });
+    toast.promise(promise, {
+      loading: "Making New Note ....",
+      success: "New Note Created",
+      error: "Failed Try Agin",
+    });
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+  };
+
+  const handleShortcut = (letter: string) => {
+    switch (letter) {
+      case "a":
+        PopUpHandle();
+        break;
+      case "s":
+        break;
+      case "k":
+        break;
+      default:
+        break;
+    }
+  };
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (
+        event.ctrlKey &&
+        (event.key === "a" || event.key === "k" || event.key === "s")
+      ) {
+        event.preventDefault();
+        handleShortcut(event.key);
+      }
+    };
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
   useEffect(() => {
     if (isMobile) {
       setIsCollapse(true);
@@ -65,20 +129,20 @@ function Navigation() {
         "width",
         `calc(100% - ${newWidth}px)`
       );
-      console.log(navBarRef.current.style.getPropertyValue("width"));
+      // console.log(navBarRef.current.style.getPropertyValue("width"));
     }
   };
   const handleMouseUp = (e: MouseEvent) => {
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };
-
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
+
   const collapseHandle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setIsCollapse(true);
     setIsResetting(true);
@@ -139,23 +203,43 @@ function Navigation() {
         <span
           onClick={collapseHandle}
           role="button"
-          className={`p-2 hover:bg-gray-300 rounded-md hover:shadow-lg w-fit absolute right-4 top-3 transition opacity-0 group-hover/sidebar:opacity-[1]
+          className={`p-2 hover:bg-gray-300 rounded-md hover:shadow-lg w-fit absolute right-2 top-4 transition opacity-0 group-hover/sidebar:opacity-[1]
           ${isMobile && "opacity-[1]"}`}
         >
           <Image src={"/arrow-light.png"} alt="arrow" width={14} height={14} />
         </span>
         <div className="">
           <UserItem />
+          <Item
+            onClick={PopUpHandle}
+            icon={"add"}
+            text={"New Note"}
+            letter="a"
+          />
+          <Item
+            onClick={() => {}}
+            icon={"setting"}
+            text={"Setting"}
+            letter="s"
+          />
+          <Item onClick={() => {}} icon={"search"} text={"Search"} letter="k" />
         </div>
         <div className="">
-          <p>Documents</p>
+          <DocumentsPage />
         </div>
+        <Item
+          onClick={PopUpHandle}
+          icon={"plus"}
+          text={"Add New Note"}
+          letter="a"
+        />
+        <Trash />
         <div
           onClick={resetWidth}
           onMouseDown={(e) => {
             !isMobile && handleMouseDown(e);
           }}
-          className={`absolute w-2 h-full bg-gray-300 transition-all opacity-0 right-0 top-0 group-hover/sidebar:opacity-[1] cursor-ew-resize
+          className={`absolute w-1 h-full bg-gray-300 transition-all opacity-0 right-0 top-0 group-hover/sidebar:opacity-[1] cursor-ew-resize
           ${isResetting && "transition-all duration-500"} `}
         />
       </aside>
@@ -180,6 +264,13 @@ function Navigation() {
         </nav>
         <Logo />
       </div>
+      <PopUp
+        noteName={noteName}
+        setNoteName={setNoteName}
+        PopupRef={PopupRef}
+        createNote={createNote}
+        closePopup={closePopup}
+      />
     </>
   );
 }

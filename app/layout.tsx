@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
@@ -36,6 +37,7 @@ export default function RootLayout({
         <div className=" absolute bottom-[20px] right-[30px] z-[99999]">
           <Themes />
         </div>
+        <Toaster position="bottom-center" />
         <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>
