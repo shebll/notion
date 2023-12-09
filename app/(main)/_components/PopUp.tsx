@@ -28,7 +28,7 @@ function PopUp({
       <div onClick={closePopup} className="absolute w-full h-full z-0" />
       <div
         ref={PopupRef}
-        className="px-10 py-6 bg-gray-200 rounded-xl shadow-2xl scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden"
+        className="px-6 py-4 bg-gray-200 rounded-xl shadow-2xl scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden"
       >
         <div
           onClick={closePopup}
@@ -42,7 +42,7 @@ function PopUp({
             alt="close"
           />
         </div>
-        <p className="text-2xl font-bold text-gray-800">Enter Name !</p>
+        <p className="text-2xl font-bold text-gray-800">Enter A Name !</p>
         <Image
           src={"/documents.png"}
           width={250}
@@ -62,7 +62,8 @@ function PopUp({
             }}
             type="text"
             required
-            className=" outline-none bg-gray-50 rounded-xl px-3 py-1"
+            placeholder="New Note"
+            className="outline-none bg-gray-50 rounded-xl px-3 py-1"
             value={noteName}
           />
           <button

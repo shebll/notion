@@ -14,9 +14,7 @@ export default function MainLayout({
   const { isAuthenticated, isLoading } = useConvexAuth();
   if (isLoading) {
     return (
-      <div className="h-screen flex justify-center items-center ">
-        <Image src={"/spinner.gif"} width={30} height={30} alt="spinner" />
-      </div>
+      <div className="h-screen flex justify-center items-center ">...</div>
     );
   }
   if (!isAuthenticated) {

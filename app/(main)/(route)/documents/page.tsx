@@ -45,14 +45,14 @@ function Documents() {
         <Image
           src={"/empty.png"}
           width={350}
-          height={350}
+          height={263}
           alt="create note image"
           className="block dark:hidden"
         />
         <Image
           src={"/empty-dark.png"}
           width={350}
-          height={350}
+          height={263}
           alt="create note image"
           className="hidden dark:block"
         />
