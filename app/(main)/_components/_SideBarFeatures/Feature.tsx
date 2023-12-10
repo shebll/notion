@@ -12,9 +12,9 @@ function Feature({ onClick, icon, text, letter }: props) {
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 bg-gray-200 hover:bg-gray-100 transition-all duration-500 cursor-pointer w-full flex justify-between items-center"
+      className="px-4 py-2 bg-gray-200 hover:bg-gray-100 text-gray-700 transition-all cursor-pointer w-full flex justify-between items-center"
     >
-      <div className="flex gap-4">
+      <div className="flex gap-2">
         <Image
           src={`/${icon}-light.png`}
           width={20}

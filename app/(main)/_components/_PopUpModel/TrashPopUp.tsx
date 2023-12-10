@@ -124,7 +124,7 @@ function TrashPopUp({ PopupRef }: props) {
                       className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
                     >
                       <Image
-                        src={"/file-light.png"}
+                        src={"/restore-light.png"}
                         alt="file"
                         width={20}
                         height={20}

@@ -28,7 +28,7 @@ function DocumentsPage({ parentDocument, level = 0 }: props) {
           no Note Yet !
         </p>
       )}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 text-gray-700">
         {documents?.map(
           (document) =>
             document.isArchive !== true && (
