@@ -110,10 +110,10 @@ function DocumentItem({ document, level }: props) {
     <div>
       <div className="hover:bg-gray-300 transition-all">
         <div
-          style={{ paddingLeft: `${level * 20 + 20}px` }}
-          className="flex justify-between py-1 px-4"
+          style={{ paddingLeft: `${level * 20 + 12}px` }}
+          className="flex justify-between py-1 px-[12px]"
         >
-          <div className="flex flex-row gap-1 items-center max-w-[70%] ">
+          <div className="flex flex-row gap-1 items-center max-w-[calc(100%-72px)] ">
             <div
               onClick={() => onExpand(document._id)}
               role="button"

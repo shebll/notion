@@ -48,7 +48,7 @@ function TrashPopUp({ PopupRef }: props) {
       <div onClick={closePopup} className="absolute w-full h-full z-0" />
       <div
         ref={PopupRef}
-        className="px-6 py-4 bg-gray-200 rounded-xl shadow-2xl scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden"
+        className="px-6 py-4 bg-gray-200 rounded-xl shadow-2xl scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden w-[400px]"
       >
         <div
           onClick={closePopup}
@@ -87,8 +87,8 @@ function TrashPopUp({ PopupRef }: props) {
           {filteredDocuments?.map((document) => (
             <div key={document._id} className="gap-2">
               <div className="hover:bg-gray-300 transition-all">
-                <div className="flex justify-between py-1 px-4">
-                  <div className="flex flex-row gap-1 items-center ">
+                <div className="flex justify-between py-1 px-4 w-full">
+                  <div className="flex flex-row gap-1 items-center w-[70%] ">
                     {document.icon ? (
                       <div className="">{document.icon}</div>
                     ) : (
