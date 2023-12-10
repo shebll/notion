@@ -1,11 +1,11 @@
 "use client";
-import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
-import { remove } from "@/convex/documents";
-import { useMutation, useQuery } from "convex/react";
+import { RefObject, useState } from "react";
 import Image from "next/image";
 
-import { RefObject, useRef, useState } from "react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { useMutation, useQuery } from "convex/react";
+
 import { toast } from "sonner";
 type props = {
   PopupRef: RefObject<HTMLDivElement>;
@@ -14,15 +14,16 @@ function TrashPopUp({ PopupRef }: props) {
   const getTrash = useQuery(api.documents.getTrash);
   const unArchive = useMutation(api.documents.unarchive);
   const removeNote = useMutation(api.documents.remove);
+
   const [searchNote, setSearchNote] = useState<string>("");
   const filteredDocuments = getTrash?.filter((item) => {
     return item.title.toLowerCase().includes(searchNote.toLowerCase());
   });
+
   const closePopup = () => {
     PopupRef.current!.style.transform = "scale(0)";
     PopupRef.current!.parentElement!.style.display = "none";
   };
-  // const onChangeHandle = (e) => {};
   const unArchiveNote = (documentId: Id<"documents">) => {
     if (!documentId) return;
     const promise = unArchive({ documentId });
@@ -41,6 +42,7 @@ function TrashPopUp({ PopupRef }: props) {
       error: "Failed to archive note.",
     });
   };
+
   return (
     <div className="w-full h-screen backdrop-blur-sm fixed inset-0 z-[9999] hidden justify-center items-center">
       <div onClick={closePopup} className="absolute w-full h-full z-0" />

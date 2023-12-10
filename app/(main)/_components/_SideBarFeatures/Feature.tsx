@@ -7,7 +7,7 @@ type props = {
   text: string;
   letter: string;
 };
-function Item({ onClick, icon, text, letter }: props) {
+function Feature({ onClick, icon, text, letter }: props) {
   const userAgent = navigator.userAgent.toLowerCase();
   return (
     <button
@@ -40,4 +40,4 @@ function Item({ onClick, icon, text, letter }: props) {
   );
 }
 
-export default Item;
+export default Feature;

@@ -9,7 +9,7 @@ function UserItem() {
   const { user } = useUser();
   return (
     <div className="p-2">
-      <div className="py-2 px-4 bg-gray-50 hover:bg-gray-100 rounded-md shadow-md flex flex-col gap-2 w-[82%] ">
+      <div className="py-2 px-4 bg-gray-100 hover:bg-gray-100 rounded-md shadow-md flex flex-col gap-2 w-[calc(100%-35px);] ">
         <div className="flex justify-between items-center flex-row">
           <div className="flex flex-row gap-2 items-center ">
             <Image

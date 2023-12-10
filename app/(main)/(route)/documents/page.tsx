@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { ElementRef, useRef, useState } from "react";
 
-import PopUp from "../../_components/PopUp";
+import PopUp from "../../_components/_PopUpModel/AddPopUp";
 
 import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";

@@ -1,30 +1,38 @@
 "use client";
-import { Id } from "@/convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
 import Image from "next/image";
-import { Dispatch, FormEvent, RefObject, SetStateAction } from "react";
+import { RefObject, useState } from "react";
+import { toast } from "sonner";
 
 type props = {
-  noteName: string;
-  setNoteName: Dispatch<SetStateAction<string>>;
   PopupRef: RefObject<HTMLDivElement>;
-  createNote: (
-    e: FormEvent<HTMLFormElement>,
-    documentId?: Id<"documents">
-  ) => void;
-  closePopup: () => void;
-  documentId?: Id<"documents">;
 };
 
-function PopUp({
-  setNoteName,
-  noteName,
-  closePopup,
-  PopupRef,
-  createNote,
-  documentId,
-}: props) {
+function AddPopUp({ PopupRef }: props) {
+  const [noteName, setNoteName] = useState<string>("");
+  const create = useMutation(api.documents.create);
+
+  const closePopup = () => {
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+  };
+  const createNote = (e: React.FormEvent<HTMLFormElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setNoteName("");
+    const promise = create({ title: noteName });
+    toast.promise(promise, {
+      loading: "Making New Note ....",
+      success: "New Note Created",
+      error: "Failed Try Agin",
+    });
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+  };
+
   return (
-    <div className="w-full h-screen backdrop-blur-sm absolute inset-0 z-[9999] hidden justify-center items-center">
+    <div className="w-full h-screen backdrop-blur-sm fixed inset-0 z-[9999] hidden justify-center items-center">
       <div onClick={closePopup} className="absolute w-full h-full z-0" />
       <div
         ref={PopupRef}
@@ -52,7 +60,7 @@ function PopUp({
         />
         <form
           onSubmit={(e) => {
-            createNote(e, documentId);
+            createNote(e);
           }}
           className="flex justify-center items-center flex-col gap-2 "
         >
@@ -78,4 +86,4 @@ function PopUp({
   );
 }
 
-export default PopUp;
+export default AddPopUp;

@@ -18,6 +18,22 @@ export const getTrash = query({
     return documents;
   },
 });
+export const getDocuments = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("not authenticated ");
+    }
+    const userId = identity.subject;
+    const documents = await ctx.db
+      .query("documents")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchive"), false))
+      .order("desc")
+      .collect();
+    return documents;
+  },
+});
 export const archive = mutation({
   args: { documentId: v.id("documents") },
   handler: async (ctx, args) => {
@@ -88,7 +104,7 @@ export const unarchive = mutation({
     };
     if (existDocument.parentDocument) {
       const parent = await ctx.db.get(existDocument.parentDocument);
-      if (parent?.isArchive == true) {
+      if (parent?.isArchive == true || !parent) {
         options.parentDocument = undefined;
       }
     }
