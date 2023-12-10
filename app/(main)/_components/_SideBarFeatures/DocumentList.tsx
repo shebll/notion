@@ -32,8 +32,8 @@ function DocumentsPage({ parentDocument, level = 0 }: props) {
         {documents?.map(
           (document) =>
             document.isArchive !== true && (
-              <Suspense key={document._id} fallback={"...."}>
-                <DocumentItem document={document} level={level} />
+              <Suspense key={document._id} fallback="....">
+                <DocumentItem document={document} level={level} List={true} />
               </Suspense>
             )
         )}

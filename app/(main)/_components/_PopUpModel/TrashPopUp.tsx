@@ -3,17 +3,14 @@ import { RefObject, useState } from "react";
 import Image from "next/image";
 
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
-import { useMutation, useQuery } from "convex/react";
+import { useQuery } from "convex/react";
 
-import { toast } from "sonner";
+import DocumentItem from "../_SideBarFeatures/DocumentItem";
 type props = {
   PopupRef: RefObject<HTMLDivElement>;
 };
 function TrashPopUp({ PopupRef }: props) {
   const getTrash = useQuery(api.documents.getTrash);
-  const unArchive = useMutation(api.documents.unarchive);
-  const removeNote = useMutation(api.documents.remove);
 
   const [searchNote, setSearchNote] = useState<string>("");
   const filteredDocuments = getTrash?.filter((item) => {
@@ -24,25 +21,6 @@ function TrashPopUp({ PopupRef }: props) {
     PopupRef.current!.style.transform = "scale(0)";
     PopupRef.current!.parentElement!.style.display = "none";
   };
-  const unArchiveNote = (documentId: Id<"documents">) => {
-    if (!documentId) return;
-    const promise = unArchive({ documentId });
-    toast.promise(promise, {
-      loading: "Moving to trash...",
-      success: "Note moved to trash!",
-      error: "Failed to archive note.",
-    });
-  };
-  const deleteNote = (documentId: Id<"documents">) => {
-    if (!documentId) return;
-    const promise = removeNote({ documentId });
-    toast.promise(promise, {
-      loading: "Moving to trash...",
-      success: "Note moved to trash!",
-      error: "Failed to archive note.",
-    });
-  };
-
   return (
     <div className="w-full h-screen backdrop-blur-sm fixed inset-0 z-[9999] hidden justify-center items-center">
       <div onClick={closePopup} className="absolute w-full h-full z-0" />
@@ -86,53 +64,7 @@ function TrashPopUp({ PopupRef }: props) {
         <div className="w-full flex justify-start flex-col gap-1 h-[200px] overflow-auto">
           {filteredDocuments?.map((document) => (
             <div key={document._id} className="gap-2">
-              <div className="hover:bg-gray-300 transition-all">
-                <div className="flex justify-between py-1 px-4 w-full">
-                  <div className="flex flex-row gap-1 items-center w-[70%] ">
-                    {document.icon ? (
-                      <div className="">{document.icon}</div>
-                    ) : (
-                      <div className="">
-                        <Image
-                          src={"/file-light.png"}
-                          alt="file"
-                          width={20}
-                          height={20}
-                        />
-                      </div>
-                    )}
-                    <h1 className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">
-                      {document.title}
-                    </h1>
-                  </div>
-                  <div className="flex gap-1 items-center ">
-                    <div
-                      role="button"
-                      onClick={() => deleteNote(document._id)}
-                      className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
-                    >
-                      <Image
-                        src={"/trash-light.png"}
-                        alt="file"
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                    <div
-                      role="button"
-                      onClick={() => unArchiveNote(document._id)}
-                      className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
-                    >
-                      <Image
-                        src={"/restore-light.png"}
-                        alt="file"
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <DocumentItem document={document} Trash={true} level={0} />
             </div>
           ))}
         </div>

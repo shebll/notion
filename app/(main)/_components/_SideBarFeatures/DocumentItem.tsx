@@ -22,22 +22,46 @@ type props = {
     isArchive: boolean;
   };
   level: number;
+  Trash?: boolean;
+  List?: boolean;
+  Search?: boolean;
 };
 type expandType = {
   documentId: string;
   expanded: boolean;
 };
 
-function DocumentItem({ document, level }: props) {
+function DocumentItem({ document, level, Trash, List, Search }: props) {
   const router = useRouter();
   const param = useParams();
   const archive = useMutation(api.documents.archive);
   const create = useMutation(api.documents.create);
+  const unArchive = useMutation(api.documents.unarchive);
+  const remove = useMutation(api.documents.remove);
 
   const [expand, setExpand] = useState<expandType[]>([
     { documentId: "", expanded: false },
   ]);
-
+  const onExpand = (documentId: string) => {
+    const existingItem = expand.find((item) => item.documentId === documentId);
+    if (existingItem) {
+      setExpand((prev) =>
+        prev.map((item) =>
+          item.documentId === documentId
+            ? { ...item, expanded: !item.expanded }
+            : item
+        )
+      );
+    } else {
+      setExpand((prev) => [
+        ...prev,
+        {
+          documentId: documentId,
+          expanded: true,
+        },
+      ]);
+    }
+  };
   const createNestedNote = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     documentId: Id<"documents">
@@ -75,7 +99,6 @@ function DocumentItem({ document, level }: props) {
       ]);
     }
   };
-
   const deleteNote = (documentId: Id<"documents">) => {
     if (!documentId) return;
     const promise = archive({ documentId });
@@ -85,25 +108,23 @@ function DocumentItem({ document, level }: props) {
       error: "Failed to archive note.",
     });
   };
-  const onExpand = (documentId: string) => {
-    const existingItem = expand.find((item) => item.documentId === documentId);
-    if (existingItem) {
-      setExpand((prev) =>
-        prev.map((item) =>
-          item.documentId === documentId
-            ? { ...item, expanded: !item.expanded }
-            : item
-        )
-      );
-    } else {
-      setExpand((prev) => [
-        ...prev,
-        {
-          documentId: documentId,
-          expanded: true,
-        },
-      ]);
-    }
+  const unArchiveNote = (documentId: Id<"documents">) => {
+    if (!documentId) return;
+    const promise = unArchive({ documentId });
+    toast.promise(promise, {
+      loading: "Get from trash...",
+      success: "Note got from trash!",
+      error: "Failed to get  note.",
+    });
+  };
+  const removeNote = (documentId: Id<"documents">) => {
+    if (!documentId) return;
+    const promise = remove({ documentId });
+    toast.promise(promise, {
+      loading: "remove note forever....",
+      success: "Note removed forever!",
+      error: "Failed to remove note.",
+    });
   };
 
   return (
@@ -114,22 +135,25 @@ function DocumentItem({ document, level }: props) {
           className="flex justify-between py-1 px-[12px]"
         >
           <div className="flex flex-row gap-1 items-center max-w-[calc(100%-72px)] ">
-            <div
-              onClick={() => onExpand(document._id)}
-              role="button"
-              className="hover:bg-gray-200 transition-all p-1 rounded-md "
-            >
-              <Image
-                src={"/arrow-light.png"}
-                alt="file"
-                width={16}
-                height={16}
-                className={` rotate-[-180deg] transition-all ${
-                  expand.find((item) => item.documentId == document._id)
-                    ?.expanded && "rotate-[-90deg]"
-                }`}
-              />
-            </div>
+            {List && (
+              <div
+                onClick={() => onExpand(document._id)}
+                role="button"
+                className="hover:bg-gray-200 transition-all p-1 rounded-md "
+              >
+                <Image
+                  src={"/arrow-light.png"}
+                  alt="file"
+                  width={16}
+                  height={16}
+                  className={` rotate-[-180deg] transition-all ${
+                    expand.find((item) => item.documentId == document._id)
+                      ?.expanded && "rotate-[-90deg]"
+                  }`}
+                />
+              </div>
+            )}
+
             {document.icon ? (
               <div className="">{document.icon}</div>
             ) : (
@@ -147,37 +171,70 @@ function DocumentItem({ document, level }: props) {
             </h1>
           </div>
           <div className="flex gap-1 items-center ">
-            <div
-              role="button"
-              onClick={(e) => createNestedNote(e, document._id)}
-              className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
-            >
-              <Image
-                src={"/plus-light.png"}
-                alt="file"
-                width={16}
-                height={16}
-                className=""
-              />
-            </div>
-            <div
-              role="button"
-              onClick={(e) => deleteNote(document._id)}
-              className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
-            >
-              <Image
-                src={"/trash-light.png"}
-                alt="file"
-                width={20}
-                height={20}
-              />
-            </div>
+            {List && (
+              <>
+                <div
+                  role="button"
+                  onClick={(e) => createNestedNote(e, document._id)}
+                  className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
+                >
+                  <Image
+                    src={"/plus-light.png"}
+                    alt="file"
+                    width={16}
+                    height={16}
+                    className=""
+                  />
+                </div>
+                <div
+                  role="button"
+                  onClick={(e) => deleteNote(document._id)}
+                  className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
+                >
+                  <Image
+                    src={"/trash-light.png"}
+                    alt="file"
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              </>
+            )}
+            {Trash && (
+              <div className="flex gap-1 items-center ">
+                <div
+                  role="button"
+                  onClick={() => removeNote(document._id)}
+                  className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
+                >
+                  <Image
+                    src={"/trash-light.png"}
+                    alt="file"
+                    width={20}
+                    height={20}
+                  />
+                </div>
+                <div
+                  role="button"
+                  onClick={() => unArchiveNote(document._id)}
+                  className="hover:bg-gray-200 p-1 rounded-md flex-shrink-0"
+                >
+                  <Image
+                    src={"/restore-light.png"}
+                    alt="file"
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {expand.find((item) => item.documentId == document._id)?.expanded && (
-        <DocumentsPage parentDocument={document._id} level={level + 1} />
-      )}
+      {expand.find((item) => item.documentId == document._id)?.expanded &&
+        List && (
+          <DocumentsPage parentDocument={document._id} level={level + 1} />
+        )}
     </div>
   );
 }

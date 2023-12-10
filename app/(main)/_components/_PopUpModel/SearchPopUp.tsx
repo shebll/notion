@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
+import DocumentItem from "../_SideBarFeatures/DocumentItem";
 
 type props = {
   PopupRef: RefObject<HTMLDivElement>;
@@ -65,25 +66,7 @@ function SearchPopUp({ PopupRef }: props) {
         <div className="w-full flex justify-start flex-col gap-1 h-[200px] overflow-auto">
           {filteredDocuments?.map((document) => (
             <div key={document._id} className="gap-2">
-              <div className="hover:bg-gray-300 transition-all">
-                <div className="flex flex-row gap-1 items-center py-1 px-4">
-                  {document.icon ? (
-                    <div className="">{document.icon}</div>
-                  ) : (
-                    <div className="">
-                      <Image
-                        src={"/file-light.png"}
-                        alt="file"
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                  )}
-                  <h1 className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap ">
-                    {document.title}
-                  </h1>
-                </div>
-              </div>
+              <DocumentItem document={document} Search={true} level={0} />
             </div>
           ))}
         </div>
