@@ -5,10 +5,10 @@ function Logo() {
   return (
     <div className="flex flex-row gap-2 items-center">
       <div className="dark:hidden block">
-        <Image src={"logo.svg"} width={24} height={24} alt="logo" />
+        <Image src={"/logo.svg"} width={24} height={24} alt="logo" />
       </div>
       <div className="hidden dark:block">
-        <Image src={"logo-dark.svg"} width={24} height={24} alt="logo" />
+        <Image src={"/logo-dark.svg"} width={24} height={24} alt="logo" />
       </div>
       <p className={`${font.className} font-bold`}>Jotion</p>
     </div>

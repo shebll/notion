@@ -34,6 +34,24 @@ export const getDocuments = query({
     return documents;
   },
 });
+export const getDocument = query({
+  args: { documentId: v.id("documents") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("not authenticated ");
+    }
+    const userId = identity.subject;
+    const existDocument = await ctx.db.get(args.documentId);
+    if (!existDocument) {
+      throw new Error("Not Found ");
+    }
+    if (existDocument.userId !== userId) {
+      throw new Error("Not authenticated ");
+    }
+    return existDocument;
+  },
+});
 export const archive = mutation({
   args: { documentId: v.id("documents") },
   handler: async (ctx, args) => {
@@ -170,6 +188,38 @@ export const create = mutation({
       userId,
       isArchive: false,
       isPublished: false,
+    });
+    return document;
+  },
+});
+export const update = mutation({
+  args: {
+    documentId: v.id("documents"),
+    title: v.optional(v.string()),
+    isArchive: v.optional(v.boolean()),
+    content: v.optional(v.string()),
+    coverImage: v.optional(v.string()),
+    icon: v.optional(v.string()),
+    isPublished: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    const { documentId, ...rest } = args;
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated 1");
+    }
+    const userId = identity.subject;
+    const existDocument = await ctx.db.get(args.documentId);
+    if (!existDocument) {
+      throw new Error("Not Found ");
+    }
+    if (existDocument.userId !== userId) {
+      throw new Error("Not authenticated ");
+    }
+
+    const document = ctx.db.patch(args.documentId, {
+      _id: documentId,
+      ...rest,
     });
     return document;
   },

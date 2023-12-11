@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.28.1",
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "convex": "^1.6.3",
+    "emoji-mart": "^5.5.2",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",

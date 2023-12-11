@@ -4,7 +4,6 @@ import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 import React from "react";
 import Navigation from "./_components/navigation";
-import Image from "next/image";
 
 export default function MainLayout({
   children,
@@ -23,7 +22,7 @@ export default function MainLayout({
   return (
     <main className="flex flex-row h-screen w-full ">
       <Navigation />
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 ">{children}</div>
     </main>
   );
 }

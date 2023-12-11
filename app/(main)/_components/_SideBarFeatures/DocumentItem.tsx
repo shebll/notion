@@ -119,6 +119,9 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
   };
   const removeNote = (documentId: Id<"documents">) => {
     if (!documentId) return;
+    // if (param.docId === documentId) {
+    router.push(`/documents`);
+    // }
     const promise = remove({ documentId });
     toast.promise(promise, {
       loading: "remove note forever....",
@@ -126,10 +129,15 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
       error: "Failed to remove note.",
     });
   };
-
+  const handleClick = (documentId: string) => {
+    router.push(`/documents/${documentId}`);
+  };
   return (
     <div>
-      <div className="hover:bg-gray-300 transition-all">
+      <div
+        onClick={() => handleClick(document._id as string)}
+        className="hover:bg-gray-300 focus:bg-gray-300 transition-all"
+      >
         <div
           style={{ paddingLeft: `${level * 20 + 12}px` }}
           className="flex justify-between py-1 px-[12px]"

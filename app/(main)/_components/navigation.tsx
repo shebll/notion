@@ -37,6 +37,7 @@ function Navigation() {
     if (isMobile) {
       setIsCollapse(true);
       if (sideBarRef.current && navBarRef.current) {
+        sideBarRef.current.style.position = "absolute";
         sideBarRef.current.style.width = `0px`;
         navBarRef.current.style.setProperty("left", `0px`);
         navBarRef.current.style.setProperty("width", `calc(100%)`);
@@ -44,6 +45,7 @@ function Navigation() {
     } else {
       setIsCollapse(false);
       if (sideBarRef.current && navBarRef.current) {
+        sideBarRef.current.style.position = "relative";
         sideBarRef.current.style.width = `256px`;
         navBarRef.current.style.setProperty("left", `256px`);
         navBarRef.current.style.setProperty("width", `calc(100%-256px)`);
@@ -128,10 +130,8 @@ function Navigation() {
     <>
       <aside
         ref={sideBarRef}
-        className={`group/sidebar h-full bg-gray-200 flex flex-col w-64 z-[9999] gap-0  overflow-y-auto
-        ${isMobile && "w-0"}${
-          isResetting && "transition-all duration-500"
-        } absolute`}
+        className={`group/sidebar h-full bg-gray-200 flex flex-col w-64 z-[9999] gap-0  overflow-y-auto relative
+        ${isMobile && "w-0"}${isResetting && "transition-all duration-500"} `}
       >
         <span
           onClick={collapseHandle}
@@ -153,12 +153,11 @@ function Navigation() {
       </aside>
       <div
         ref={navBarRef}
-        className={`absolute  top-0 z-[9999] transition
-        ${
-          isMobile ? "w-full left-0" : "left-[256px] w-[calc(100%-256px)]"
-        } z-[999] p-4 flex justify-between items-center`}
+        className={`absolute top-0  p-4 flex justify-between items-center
+        ${isMobile ? "w-full left-0" : "left-[256px] w-[calc(100%-256px)]"}
+        ${isResetting && "transition-all duration-500"}  `}
       >
-        <nav>
+        <nav className="flex  items-center gap-4">
           {isCollapse && (
             <span role="button" onClick={openHandle} className="">
               <Image
@@ -169,6 +168,7 @@ function Navigation() {
               />
             </span>
           )}
+          <h1>Made By Shebl </h1>
         </nav>
         <Logo />
       </div>

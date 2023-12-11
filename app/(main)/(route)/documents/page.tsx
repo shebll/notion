@@ -2,12 +2,11 @@
 import Image from "next/image";
 import React, { ElementRef, useRef, useState } from "react";
 
-import PopUp from "../../_components/_PopUpModel/AddPopUp";
-
 import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import AddPopUp from "../../_components/_PopUpModel/AddPopUp";
 
 function Documents() {
   const PopupRef = useRef<ElementRef<"div">>(null);
@@ -67,13 +66,7 @@ function Documents() {
           </div>
         </div>
       </div>
-      <PopUp
-        noteName={noteName}
-        setNoteName={setNoteName}
-        PopupRef={PopupRef}
-        createNote={createNote}
-        closePopup={closePopup}
-      />
+      <AddPopUp PopupRef={PopupRef} />
     </>
   );
 }
