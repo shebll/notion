@@ -63,7 +63,7 @@ function TrashPopUp({ PopupRef }: props) {
         </div>
         <div className="w-full flex justify-start flex-col gap-1 h-[200px] overflow-auto">
           {filteredDocuments?.map((document) => (
-            <div key={document._id} className="gap-2">
+            <div key={document._id} onClick={closePopup}>
               <DocumentItem document={document} Trash={true} level={0} />
             </div>
           ))}

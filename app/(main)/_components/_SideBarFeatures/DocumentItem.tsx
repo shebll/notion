@@ -33,7 +33,7 @@ type expandType = {
 
 function DocumentItem({ document, level, Trash, List, Search }: props) {
   const router = useRouter();
-  const param = useParams();
+  const { docId } = useParams();
   const archive = useMutation(api.documents.archive);
   const create = useMutation(api.documents.create);
   const unArchive = useMutation(api.documents.unarchive);
@@ -69,7 +69,7 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
     e.stopPropagation();
     e.preventDefault();
     const promise = create({
-      title: "noteName",
+      title: "undefine",
       parentDocument: documentId,
     });
     toast.promise(promise, {
@@ -98,8 +98,12 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
         },
       ]);
     }
+    promise.then((data) => {
+      router.push(`/documents/${data}`);
+    });
   };
   const deleteNote = (documentId: Id<"documents">) => {
+    router.push(`/documents/${documentId}`);
     if (!documentId) return;
     const promise = archive({ documentId });
     toast.promise(promise, {
@@ -116,12 +120,14 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
       success: "Note got from trash!",
       error: "Failed to get  note.",
     });
+    router.push(`/documents/${documentId}`);
   };
   const removeNote = (documentId: Id<"documents">) => {
     if (!documentId) return;
-    // if (param.docId === documentId) {
-    router.push(`/documents`);
-    // }
+    if (docId == (documentId as string)) {
+      router.push(`/documents`);
+    }
+
     const promise = remove({ documentId });
     toast.promise(promise, {
       loading: "remove note forever....",
@@ -134,15 +140,15 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
   };
   return (
     <div>
-      <div
-        onClick={() => handleClick(document._id as string)}
-        className="hover:bg-gray-300 focus:bg-gray-300 transition-all"
-      >
+      <div className="hover:bg-gray-300 focus:bg-gray-300 transition-all cursor-pointer">
         <div
           style={{ paddingLeft: `${level * 20 + 12}px` }}
           className="flex justify-between py-1 px-[12px]"
         >
-          <div className="flex flex-row gap-1 items-center max-w-[calc(100%-72px)] ">
+          <div
+            onClick={() => handleClick(document._id as string)}
+            className="flex flex-row gap-1 items-center w-full max-w-[calc(100%-72px)] "
+          >
             {List && (
               <div
                 onClick={() => onExpand(document._id)}

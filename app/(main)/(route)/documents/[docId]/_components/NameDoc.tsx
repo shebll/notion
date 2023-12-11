@@ -21,7 +21,7 @@ type props = {
 };
 function NameDoc({ docIcon, docId, docTitle }: props) {
   const inputRef = useRef<ElementRef<"input">>(null);
-  const [name, setName] = useState<string>(document.title);
+  const [name, setName] = useState<string>(docTitle);
   const [icon, setIcon] = useState<string>("");
   const [toggle, setToggle] = useState<boolean>(false);
 
