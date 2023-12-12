@@ -168,7 +168,7 @@ function Navigation() {
               />
             </span>
           )}
-          <h1>Made By Shebl </h1>
+          <h1 className="text-gray-500 font-semibold ">© Made By Shebl</h1>
         </nav>
         <Logo />
       </div>

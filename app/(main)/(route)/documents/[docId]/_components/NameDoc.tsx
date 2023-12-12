@@ -20,6 +20,7 @@ type props = {
   docId: Id<"documents">;
 };
 function NameDoc({ docIcon, docId, docTitle }: props) {
+  let size = "small";
   const inputRef = useRef<ElementRef<"input">>(null);
   const [name, setName] = useState<string>(docTitle);
   const [icon, setIcon] = useState<string>("");
@@ -60,10 +61,26 @@ function NameDoc({ docIcon, docId, docTitle }: props) {
         className=""
       >
         {docIcon ? (
-          <div className="text-[40px]">{docIcon}</div>
+          <div className={`${size == "small" ? "text-[20px]" : "text-[60px]"}`}>
+            {docIcon}
+          </div>
         ) : (
           <div className="">
-            <Image src={"/file-light.png"} alt="file" width={50} height={50} />
+            {size == "small" ? (
+              <Image
+                src={"/file-light.png"}
+                alt="file"
+                width={20}
+                height={20}
+              />
+            ) : (
+              <Image
+                src={"/file-light.png"}
+                alt="file"
+                width={20}
+                height={20}
+              />
+            )}
           </div>
         )}
       </div>
@@ -74,7 +91,12 @@ function NameDoc({ docIcon, docId, docTitle }: props) {
         />
       </div>
       <div className="relative h-[30px]">
-        <h2 className="text-xl font-bold" onClick={() => setIsEditing(true)}>
+        <h2
+          className={` cursor-pointer ${
+            size == "small" ? "text-lg font-semibold" : "text-6xl font-bold"
+          }`}
+          onClick={() => setIsEditing(true)}
+        >
           {docTitle}
         </h2>
         <input
@@ -83,8 +105,9 @@ function NameDoc({ docIcon, docId, docTitle }: props) {
           onChange={(e) => setName(e.target.value)}
           onBlur={unFocusHandle}
           value={name}
-          className={`outline-none text-xl font-bold text-gray-500 absolute top-0  ${
-            isEditing ? "block" : "hidden"
+          className={`outline-none  text-gray-500 absolute top-0
+            ${isEditing ? "block" : "hidden"} ${
+            size == "small" ? "text-lg font-semibold" : "text-6xl font-bold"
           }`}
         />
       </div>

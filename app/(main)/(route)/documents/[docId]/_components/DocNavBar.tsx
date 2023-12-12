@@ -1,6 +1,7 @@
 "use client";
 import { Id } from "@/convex/_generated/dataModel";
 import NameDoc from "./NameDoc";
+import DocFunctionally from "./DocFunctionalty";
 type props = {
   document: {
     _id: Id<"documents">;
@@ -23,6 +24,7 @@ function DocNavBar({ document }: props) {
         docId={document._id}
         docTitle={document.title}
       />
+      <DocFunctionally document={document} />
     </div>
   );
 }

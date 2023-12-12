@@ -5,7 +5,6 @@ import React, { ElementRef, useRef, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { toast } from "sonner";
 import AddPopUp from "../../_components/_PopUpModel/AddPopUp";
 
 function Documents() {
@@ -19,23 +18,6 @@ function Documents() {
     PopupRef.current!.style.transform = "scale(1)";
     PopupRef.current!.parentElement!.style.display = "flex";
     document.body.style.opacity = "0px";
-  };
-  const closePopup = () => {
-    PopupRef.current!.style.transform = "scale(0)";
-    PopupRef.current!.parentElement!.style.display = "none";
-  };
-  const createNote = (e: React.FormEvent<HTMLFormElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setNoteName("");
-    const promise = create({ title: noteName });
-    toast.promise(promise, {
-      loading: "Making New Note ....",
-      success: "New Note Created",
-      error: "Failed Try Agin",
-    });
-    PopupRef.current!.style.transform = "scale(0)";
-    PopupRef.current!.parentElement!.style.display = "none";
   };
 
   return (
