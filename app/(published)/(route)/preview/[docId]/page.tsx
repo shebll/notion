@@ -6,17 +6,17 @@ import React from "react";
 type props = {
   params: { docId: string };
 };
-function Page({ params: { docId } }: props) {
-  const fetchDoc = useQuery(api.documents.getDocument, {
+function PublishedDoc({ params: { docId } }: props) {
+  const document = useQuery(api.documents.getPublishedDocument, {
     documentId: docId as Id<"documents">,
   });
-  if (!fetchDoc)
+  if (!document)
     return (
-      <p className="p-4 pt-14 w-full h-full flex justify-center items-center">
+      <p className="p-4 pt-14 w-full h-full flex justify-center items-center min-h-screen">
         ...
       </p>
     );
-  return <div className="min-h-screen">doc pages</div>;
+  return <div className="min-h-screen">{document.title}</div>;
 }
 
-export default Page;
+export default PublishedDoc;

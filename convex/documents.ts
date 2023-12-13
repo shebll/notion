@@ -22,7 +22,7 @@ export const getDocuments = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      throw new Error("not authenticated ");
+      throw new Error("not authenticated 22");
     }
     const userId = identity.subject;
     const documents = await ctx.db
@@ -48,6 +48,19 @@ export const getDocument = query({
     }
     if (existDocument.userId !== userId) {
       throw new Error("Not authenticated ");
+    }
+    return existDocument;
+  },
+});
+export const getPublishedDocument = query({
+  args: { documentId: v.id("documents") },
+  handler: async (ctx, args) => {
+    const existDocument = await ctx.db.get(args.documentId);
+    if (!existDocument) {
+      throw new Error("Not Found");
+    }
+    if (!existDocument.isPublished) {
+      throw new Error("this document not published");
     }
     return existDocument;
   },
