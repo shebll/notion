@@ -35,8 +35,8 @@ function UploadImage({ docId }: props) {
         upload image
       </button>
       {toggle && (
-        <>
-          <div className="w-[340px] absolute top-[10px] right-[101%] z-[99999] p-6 border rounded-xl shadow-xl flex flex-col justify-center items-center gap-6">
+        <div className="fixed flex h-screen w-screen inset-0 z-[99999] justify-center items-center ">
+          <div className="w-[340px] bg-white  z-[99999] p-6 border rounded-xl shadow-xl flex flex-col justify-center items-center gap-6">
             <h1 className="text-2xl font-semibold ">Select Cover Image</h1>
             <SingleImageDropzone
               className="bg-white w-[300px]"
@@ -48,7 +48,7 @@ function UploadImage({ docId }: props) {
             onClick={() => setToggle(false)}
             className="fixed z-[9999] backdrop-blur-[2px] h-screen w-screen inset-0"
           ></div>
-        </>
+        </div>
       )}
     </div>
   );

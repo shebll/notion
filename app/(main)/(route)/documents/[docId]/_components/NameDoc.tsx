@@ -48,6 +48,7 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
       documentId: docId,
       icon: icon,
     });
+    setToggle(false);
   };
   const unFocusHandle = () => {
     setIsEditing(false);
@@ -75,33 +76,36 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
       >
         <div
           className={`flex justify-center items-center ${
-            size == "small" ? "text-[20px]" : "text-[60px]"
+            size == "small" ? "text-[20px]" : "text-[40px] md:text-[60px]"
           }`}
         >
           {docIcon || icon}
         </div>
-        {/* {icon ? (
-          <div
-            className={`flex justify-center items-center ${
-              size == "small" ? "text-[20px]" : "text-[60px]"
-            }`}
-          >
-            {docIcon}
-          </div>
-        ) }*/}
       </div>
       <div
-        className={`z-[2] absolute top-[100%] ${toggle ? "block" : "hidden"} `}
+        className={`fixed flex h-screen w-screen inset-0 z-[99999] justify-center items-center  ${
+          toggle ? "block" : "hidden"
+        } `}
       >
-        <Picker
-          data={data}
-          onEmojiSelect={(data: any) => handleIconChange(data.native as string)}
+        <div className="z-[1]">
+          <Picker
+            data={data}
+            onEmojiSelect={(data: any) =>
+              handleIconChange(data.native as string)
+            }
+          />
+        </div>
+        <div
+          onClick={() => setToggle(false)}
+          className="fixed z-[0] backdrop-blur-[2px] h-screen w-screen inset-0"
         />
       </div>
       <div className={`relative ${size == "large" ? "h-[80px]" : "h-[30px]"}`}>
         <h2
           className={`cursor-pointer h-full flex items-center ${
-            size == "small" ? "text-lg font-semibold" : "text-6xl font-bold"
+            size == "small"
+              ? "text-lg font-semibold"
+              : "text-5xl md:text-6xl font-bold"
           }`}
           onClick={() => setIsEditing(true)}
         >
@@ -114,13 +118,13 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
           onChange={(e) => inInput(e.target.value)}
           onBlur={unFocusHandle}
           value={name}
-          className={`outline-none  text-gray-500 absolute top-0  ${
-            size == "large"
-              ? "h-[-webkit-fill-available] "
-              : "h-[-webkit-fill-available]  "
+          className={`outline-none  text-gray-500 absolute top-0 h-[-webkit-fill-available] ${
+            size == "large" ? " w-[90vw] md:w-[50vw]" : " w-[60vw] "
           }
             ${isEditing ? "block" : "hidden"} ${
-            size == "small" ? "text-lg font-semibold" : "text-6xl font-bold"
+            size == "small"
+              ? "text-lg font-semibold"
+              : "text-5xl md:text-6xl font-bold"
           }`}
         />
       </div>

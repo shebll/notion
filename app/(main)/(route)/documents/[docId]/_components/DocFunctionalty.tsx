@@ -61,7 +61,7 @@ function DocFunctionally({ document }: props) {
   };
   const copyHandle = () => {
     setIscCopied(true);
-    navigator.clipboard.writeText(`/published/${document._id}`);
+    navigator.clipboard.writeText(`/preview/${document._id}`);
     setTimeout(() => {
       setIscCopied(false);
     }, 3000);
@@ -116,7 +116,7 @@ function DocFunctionally({ document }: props) {
             </div>
             <div className="flex rounded-lg overflow-hidden items-stretch">
               <div className="p-2 bg-gray-200/60 border w-[256px] text-gray-900 text-ellipsis overflow-hidden whitespace-nowrap ">
-                {`/published/${document._id}`}
+                {`/preview/${document._id}`}
               </div>
               <div
                 onClick={copyHandle}

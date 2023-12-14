@@ -44,7 +44,7 @@ function Banner({ document }: props) {
   };
   return (
     <div className="bg-red-500 p-2 w-full flex  justify-center items-center gap-4">
-      <h1 className="text-white font-semibold text-xl">
+      <h1 className="text-white font-semibold text-xl hidden md:block">
         This Document Is In Trash
       </h1>
       <button

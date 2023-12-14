@@ -46,7 +46,7 @@ function Cover({ coverImage, docId }: props) {
   };
   return (
     <div
-      className={`w-full relative h-[36vh] overflow-hidden bg-gray-200 ${
+      className={`w-full relative md:h-[36vh] overflow-hidden bg-gray-200 ${
         !coverImage && "h-[12vh]"
       }`}
     >
@@ -72,7 +72,7 @@ function Cover({ coverImage, docId }: props) {
         </button>
         {toggle && (
           <div className="fixed flex h-screen w-screen inset-0 z-[99999] justify-center items-center ">
-            <div className="w-[340px] z-[222] p-6 border rounded-xl shadow-xl flex flex-col justify-center items-center gap-6">
+            <div className="w-[340px] bg-white z-[222] p-6 border rounded-xl shadow-xl flex flex-col justify-center items-center gap-6">
               <h1 className="text-2xl font-semibold ">Select Cover Image</h1>
               <SingleImageDropzone
                 className="bg-white w-[300px]"
