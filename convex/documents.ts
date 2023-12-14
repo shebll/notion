@@ -201,6 +201,7 @@ export const create = mutation({
       userId,
       isArchive: false,
       isPublished: false,
+      icon: "📂",
     });
     return document;
   },

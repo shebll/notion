@@ -2,6 +2,8 @@
 import { Id } from "@/convex/_generated/dataModel";
 import NameDoc from "./NameDoc";
 import DocFunctionally from "./DocFunctionalty";
+import Banner from "./Banner";
+
 type props = {
   document: {
     _id: Id<"documents">;
@@ -18,13 +20,17 @@ type props = {
 };
 function DocNavBar({ document }: props) {
   return (
-    <div className="w-full flex justify-between items-center relative">
-      <NameDoc
-        docIcon={document.icon!}
-        docId={document._id}
-        docTitle={document.title}
-      />
-      <DocFunctionally document={document} />
+    <div className="w-full flex flex-col items-center relative gap-2">
+      <div className="w-full flex justify-between items-center px-4  ">
+        <NameDoc
+          docIcon={document.icon!}
+          docId={document._id}
+          docTitle={document.title}
+          size="small"
+        />
+        <DocFunctionally document={document} />
+      </div>
+      {document.isArchive && <Banner document={document} />}
     </div>
   );
 }

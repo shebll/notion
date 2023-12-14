@@ -2,6 +2,7 @@
 import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { RefObject, useState } from "react";
 import { toast } from "sonner";
 
@@ -10,6 +11,7 @@ type props = {
 };
 
 function AddPopUp({ PopupRef }: props) {
+  const route = useRouter();
   const [noteName, setNoteName] = useState<string>("");
   const create = useMutation(api.documents.create);
 
@@ -21,7 +23,9 @@ function AddPopUp({ PopupRef }: props) {
     e.stopPropagation();
     e.preventDefault();
     setNoteName("");
-    const promise = create({ title: noteName });
+    const promise = create({ title: noteName }).then((data) =>
+      route.push(`/documents/${data}`)
+    );
     toast.promise(promise, {
       loading: "Making New Note ....",
       success: "New Note Created",
@@ -32,11 +36,11 @@ function AddPopUp({ PopupRef }: props) {
   };
 
   return (
-    <div className="w-full h-screen backdrop-blur-sm fixed inset-0 z-[9999] hidden justify-center items-center">
+    <div className="w-full h-screen backdrop-blur-[2px] fixed inset-0 z-[9999] hidden justify-center items-center">
       <div onClick={closePopup} className="absolute w-full h-full z-0" />
       <div
         ref={PopupRef}
-        className="px-6 py-4 bg-gray-200 rounded-xl shadow-2xl scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden"
+        className="px-6 py-4 rounded-xl  bg-white shadow-2xl border-2  scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden"
       >
         <div
           onClick={closePopup}

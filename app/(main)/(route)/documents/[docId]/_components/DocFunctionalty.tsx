@@ -3,7 +3,8 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 type props = {
   document: {
     _id: Id<"documents">;
@@ -21,15 +22,42 @@ type props = {
 function DocFunctionally({ document }: props) {
   const [toggle, setToggle] = useState(false);
   const [iscCopied, setIscCopied] = useState(false);
-
+  const [isArchive, setIsArchive] = useState(document.isArchive);
   const [isPublished, setIsPublished] = useState(document.isPublished);
-  const updateNote = useMutation(api.documents.update);
+  const update = useMutation(api.documents.update);
+  const archive = useMutation(api.documents.archive);
+  useEffect(() => {
+    setIsArchive(document.isArchive);
+  }, [document.isArchive]);
+  const archiveNote = () => {
+    if (isArchive) return;
+    const promise = archive({ documentId: document._id });
+    toast.promise(promise, {
+      loading: "Moving to trash...",
+      success: "Note moved to trash!",
+      error: "Failed to archive note.",
+    });
+    setIsArchive(true);
+  };
   const publishHandle = async () => {
-    const documentUpdated = await updateNote({
+    const documentUpdated = update({
       documentId: document._id,
       isPublished: !isPublished,
     });
     setIsPublished((prev) => !prev);
+    if (!isPublished) {
+      toast.promise(documentUpdated, {
+        loading: "Publish This Note...",
+        success: "Note Published Live!",
+        error: "Failed to Publish note.",
+      });
+    } else {
+      toast.promise(documentUpdated, {
+        loading: "UnPublish This Note...",
+        success: "Note UnPublished on live web!",
+        error: "Failed to UnPublish Note.",
+      });
+    }
   };
   const copyHandle = () => {
     setIscCopied(true);
@@ -56,7 +84,7 @@ function DocFunctionally({ document }: props) {
       <div
         className={`${
           toggle ? "flex" : "hidden"
-        } absolute top-[100%] right-[80px] bg-white border rounded-xl shadow-xl py-6 px-8 flex-col gap-2 overflow-hidden`}
+        } absolute top-[100%] md:right-[80px] right-[0px] z-[99999] bg-white border-[2px] border-gray-200 rounded-xl shadow-xl py-6 px-8 flex-col gap-2 overflow-hidden`}
       >
         {!isPublished ? (
           <div className="flex flex-col gap-1  transition-all">
@@ -127,7 +155,18 @@ function DocFunctionally({ document }: props) {
           {isPublished ? "UnPublish" : "Publish"}
         </button>
       </div>
-      <button className="text-red-800 hover:text-red-900 transition-all  ">
+      <div
+        onClick={() => setToggle(false)}
+        className={` fixed h-screen w-screen z-[9999] backdrop-blur-[2px] left-0 top-0 ${
+          toggle ? "flex" : "hidden"
+        }`}
+      ></div>
+      <button
+        onClick={archiveNote}
+        className={`text-red-800 hover:text-red-900 transition-all ${
+          isArchive && "cursor-not-allowed text-gray-400 hover:text-gray-400 "
+        }`}
+      >
         Delete
       </button>
     </div>

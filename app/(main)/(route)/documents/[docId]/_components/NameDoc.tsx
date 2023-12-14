@@ -18,12 +18,12 @@ type props = {
   docIcon: string;
   docTitle: string;
   docId: Id<"documents">;
+  size: string;
 };
-function NameDoc({ docIcon, docId, docTitle }: props) {
-  let size = "small";
+function NameDoc({ docIcon, docId, docTitle, size }: props) {
   const inputRef = useRef<ElementRef<"input">>(null);
   const [name, setName] = useState<string>(docTitle);
-  const [icon, setIcon] = useState<string>("");
+  const [icon, setIcon] = useState<string>(docIcon || "📂");
   const [toggle, setToggle] = useState<boolean>(false);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -34,12 +34,14 @@ function NameDoc({ docIcon, docId, docTitle }: props) {
       inputRef.current?.focus();
     }
   }, [isEditing]);
-  useEffect(() => {
-    const documentUpdated = updateNote({
+
+  const inInput = (value: string) => {
+    setName(value);
+    updateNote({
       documentId: docId,
-      title: name,
+      title: value,
     });
-  }, [name]);
+  };
   const handleIconChange = (icon: string) => {
     setIcon(icon);
     const documentUpdated = updateNote({
@@ -49,40 +51,44 @@ function NameDoc({ docIcon, docId, docTitle }: props) {
   };
   const unFocusHandle = () => {
     setIsEditing(false);
-    if (name === "") {
-      setName("unnamed");
+    updateNote({
+      documentId: docId,
+      title: name || "unnamed",
+    });
+  };
+  const onEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      unFocusHandle();
     }
   };
   return (
-    <div className="flex items-center gap-3">
+    <div
+      className={`flex gap-3 relative ${
+        size == "large" ? "flex-col  items-start" : "item-center"
+      }`}
+    >
       <div
         role="button"
         onClick={() => setToggle((prev) => !prev)}
         className=""
       >
-        {docIcon ? (
-          <div className={`${size == "small" ? "text-[20px]" : "text-[60px]"}`}>
+        <div
+          className={`flex justify-center items-center ${
+            size == "small" ? "text-[20px]" : "text-[60px]"
+          }`}
+        >
+          {docIcon || icon}
+        </div>
+        {/* {icon ? (
+          <div
+            className={`flex justify-center items-center ${
+              size == "small" ? "text-[20px]" : "text-[60px]"
+            }`}
+          >
             {docIcon}
           </div>
-        ) : (
-          <div className="">
-            {size == "small" ? (
-              <Image
-                src={"/file-light.png"}
-                alt="file"
-                width={20}
-                height={20}
-              />
-            ) : (
-              <Image
-                src={"/file-light.png"}
-                alt="file"
-                width={20}
-                height={20}
-              />
-            )}
-          </div>
-        )}
+        ) }*/}
       </div>
       <div className={`absolute top-[100%] ${toggle ? "block" : "hidden"} `}>
         <Picker
@@ -90,9 +96,9 @@ function NameDoc({ docIcon, docId, docTitle }: props) {
           onEmojiSelect={(data: any) => handleIconChange(data.native as string)}
         />
       </div>
-      <div className="relative h-[30px]">
+      <div className={`relative ${size == "large" ? "h-[80px]" : "h-[30px]"}`}>
         <h2
-          className={` cursor-pointer ${
+          className={`cursor-pointer h-full flex items-center ${
             size == "small" ? "text-lg font-semibold" : "text-6xl font-bold"
           }`}
           onClick={() => setIsEditing(true)}
@@ -102,10 +108,15 @@ function NameDoc({ docIcon, docId, docTitle }: props) {
         <input
           ref={inputRef}
           type="text"
-          onChange={(e) => setName(e.target.value)}
+          onKeyDown={onEnterKey}
+          onChange={(e) => inInput(e.target.value)}
           onBlur={unFocusHandle}
           value={name}
-          className={`outline-none  text-gray-500 absolute top-0
+          className={`outline-none  text-gray-500 absolute top-0  ${
+            size == "large"
+              ? "h-[-webkit-fill-available] "
+              : "h-[-webkit-fill-available]  "
+          }
             ${isEditing ? "block" : "hidden"} ${
             size == "small" ? "text-lg font-semibold" : "text-6xl font-bold"
           }`}
