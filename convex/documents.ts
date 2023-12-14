@@ -238,3 +238,27 @@ export const update = mutation({
     return document;
   },
 });
+export const removeCover = mutation({
+  args: {
+    documentId: v.id("documents"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated 1");
+    }
+    const userId = identity.subject;
+    const existDocument = await ctx.db.get(args.documentId);
+    if (!existDocument) {
+      throw new Error("Not Found ");
+    }
+    if (existDocument.userId !== userId) {
+      throw new Error("Not authenticated ");
+    }
+
+    const document = ctx.db.patch(args.documentId, {
+      coverImage: undefined,
+    });
+    return document;
+  },
+});

@@ -4,6 +4,7 @@ import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 import React from "react";
 import Navigation from "./_components/navigation";
+import { EdgeStoreProvider } from "../lib/edgestore";
 
 export default function MainLayout({
   children,
@@ -22,7 +23,9 @@ export default function MainLayout({
   return (
     <main className="flex flex-row h-screen w-full ">
       <Navigation />
-      <div className="flex-1 ">{children}</div>
+      <EdgeStoreProvider>
+        <div className="flex-1 ">{children}</div>
+      </EdgeStoreProvider>
     </main>
   );
 }

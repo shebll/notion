@@ -90,7 +90,9 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
           </div>
         ) }*/}
       </div>
-      <div className={`absolute top-[100%] ${toggle ? "block" : "hidden"} `}>
+      <div
+        className={`z-[2] absolute top-[100%] ${toggle ? "block" : "hidden"} `}
+      >
         <Picker
           data={data}
           onEmojiSelect={(data: any) => handleIconChange(data.native as string)}
