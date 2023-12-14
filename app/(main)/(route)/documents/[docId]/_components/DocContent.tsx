@@ -4,6 +4,7 @@ import React from "react";
 import NameDoc from "./NameDoc";
 import UploadImage from "./UploadImage";
 import Cover from "./Cover";
+import Editor from "./Editor";
 type props = {
   document: {
     _id: Id<"documents">;
@@ -33,6 +34,7 @@ function DocContent({ document }: props) {
           docTitle={document.title}
           size="large"
         />
+        <Editor docId={document._id} content={document.content} />
       </div>
     </div>
   );
