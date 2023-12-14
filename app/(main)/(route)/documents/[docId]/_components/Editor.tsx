@@ -1,5 +1,5 @@
 "use client";
-import { BlockNoteEditor, PartialBlock, pa } from "@blocknote/core";
+import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/core/style.css";
 import { Id } from "@/convex/_generated/dataModel";
@@ -21,15 +21,15 @@ function Editor({ content, docId }: props) {
     });
   };
   const handleUpload = async (file?: File) => {
-    const res = await edgestore.publicFiles.upload({ file });
-
-    return res.url;
+    let res;
+    if (file) {
+      res = await edgestore.publicFiles.upload({ file });
+    }
+    return res!.url;
   };
   const editor: BlockNoteEditor = useBlockNote({
     editable: true,
-    initialContent: content
-      ? (JSON.parse(content) as PartialBlock[])
-      : undefined,
+    initialContent: content ? JSON.parse(content) : undefined,
     onEditorContentChange: (editor) => {
       onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
     },
