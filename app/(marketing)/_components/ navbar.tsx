@@ -19,7 +19,9 @@ function NavBar() {
       <div className="flex flex-row gap-4 items-center">
         {isLoading && (
           <div className=" flex flex-row gap-4 items-center">
-            <div className="text-center bg-slate-600 shadow-lg rounded-md dark:bg-gray-200 h-[32px] w-[116.44px] cursor-wait text-white dark:text-gray-800 font-bold" />
+            <div className="text-center bg-slate-600 shadow-lg rounded-md dark:bg-gray-200 h-[28px] w-[116.44px] cursor-wait text-white dark:text-gray-800 font-bold flex justify-center items-center">
+              <div className=" animate-spin rounded-full border-dotted border-[2px] h-5 w-5 dark:border-black"></div>
+            </div>
             <div className="w-8 h-8 rounded-full bg-gray-200 cursor-wait" />
           </div>
         )}

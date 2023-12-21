@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import Navigation from "./_components/navigation";
 import { EdgeStoreProvider } from "../lib/edgestore";
+import Loading from "../loading";
 
 export default function MainLayout({
   children,
@@ -13,9 +14,7 @@ export default function MainLayout({
 }) {
   const { isAuthenticated, isLoading } = useConvexAuth();
   if (isLoading) {
-    return (
-      <div className="h-screen flex justify-center items-center ">...</div>
-    );
+    return <Loading />;
   }
   if (!isAuthenticated) {
     redirect("/");
