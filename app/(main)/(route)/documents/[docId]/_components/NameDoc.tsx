@@ -5,15 +5,8 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import Image from "next/image";
-import React, {
-  ElementRef,
-  LegacyRef,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ElementRef, useEffect, useRef, useState } from "react";
+import { useTitle } from "@/hocks/use-title";
 type props = {
   docIcon: string;
   docTitle: string;
@@ -22,7 +15,7 @@ type props = {
 };
 function NameDoc({ docIcon, docId, docTitle, size }: props) {
   const inputRef = useRef<ElementRef<"input">>(null);
-  const [name, setName] = useState<string>(docTitle);
+  const { title, setTitle } = useTitle((state) => state);
   const [icon, setIcon] = useState<string>(docIcon || "📂");
   const [toggle, setToggle] = useState<boolean>(false);
 
@@ -36,7 +29,7 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
   }, [isEditing]);
 
   const inInput = (value: string) => {
-    setName(value);
+    setTitle(value);
     updateNote({
       documentId: docId,
       title: value,
@@ -54,7 +47,7 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
     setIsEditing(false);
     updateNote({
       documentId: docId,
-      title: name || "unnamed",
+      title: title || "unnamed",
     });
   };
   const onEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -109,7 +102,7 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
           }`}
           onClick={() => setIsEditing(true)}
         >
-          {docTitle}
+          {title}
         </h2>
         <input
           ref={inputRef}
@@ -117,7 +110,7 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
           onKeyDown={onEnterKey}
           onChange={(e) => inInput(e.target.value)}
           onBlur={unFocusHandle}
-          value={name}
+          value={title}
           className={`outline-none  text-gray-500 absolute top-0 h-[-webkit-fill-available] ${
             size == "large" ? " w-[90vw] md:w-[50vw]" : " w-[60vw] "
           }
