@@ -16,12 +16,16 @@ type props = {
 function NameDoc({ docIcon, docId, docTitle, size }: props) {
   const inputRef = useRef<ElementRef<"input">>(null);
   const { title, setTitle } = useTitle((state) => state);
+
   const [icon, setIcon] = useState<string>(docIcon || "📂");
   const [toggle, setToggle] = useState<boolean>(false);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const updateNote = useMutation(api.documents.update);
 
+  useEffect(() => {
+    setTitle(docTitle);
+  }, []);
   useEffect(() => {
     if (isEditing) {
       inputRef.current?.focus();
