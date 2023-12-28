@@ -26,12 +26,12 @@ function SearchPopUp({ PopupRef }: props) {
       <div onClick={closePopup} className="absolute w-full h-full z-0" />
       <div
         ref={PopupRef}
-        className="px-6 py-4 bg-white shadow-2xl border-2 rounded-xl  scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden max-w-[400px]"
+        className="px-6 py-4 bg-gray-200 shadow-2xl border-2 rounded-xl  scale-0 flex flex-col gap-4 justify-center items-center z-10 overflow-hidden max-w-[400px]"
       >
         <div
           onClick={closePopup}
           role="button"
-          className="absolute bg-gray-300  top-0 right-0 p-1 rounded-sm"
+          className="absolute top-2 right-2  p-1 rounded-sm"
         >
           <Image
             src={"/dropdown-light.png"}

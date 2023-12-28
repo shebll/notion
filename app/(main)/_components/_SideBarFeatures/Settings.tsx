@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import Feature from "./Feature";
 import SearchPopUp from "../_PopUpModel/SearchPopUp";
+import SettingsPopUp from "../_PopUpModel/SettingsPopUp";
 
 type props = {
   activeFeature: string;
@@ -24,7 +25,7 @@ function Settings({ activeFeature }: props) {
         text={"Setting"}
         letter="s"
       />
-      <SearchPopUp PopupRef={PopupRef} />
+      <SettingsPopUp PopupRef={PopupRef} />
     </>
   );
 }

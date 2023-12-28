@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className=" absolute bottom-[20px] right-[30px] z-[99999]">
+        <div className=" fixed bottom-[20px] right-[30px] z-[99999]">
           <Themes />
         </div>
         <Toaster position="bottom-center" />
