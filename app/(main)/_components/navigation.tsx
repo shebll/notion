@@ -42,14 +42,6 @@ function Navigation() {
         navBarRef.current.style.setProperty("left", `0px`);
         navBarRef.current.style.setProperty("width", `calc(100%)`);
       }
-    } else {
-      setIsCollapse(false);
-      if (sideBarRef.current && navBarRef.current) {
-        sideBarRef.current.style.position = "relative";
-        sideBarRef.current.style.width = `256px`;
-        navBarRef.current.style.setProperty("left", `256px`);
-        navBarRef.current.style.setProperty("width", `calc(100%-256px)`);
-      }
     }
   }, [isMobile, pathname]);
 
