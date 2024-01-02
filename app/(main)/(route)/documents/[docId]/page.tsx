@@ -20,7 +20,7 @@ function DocumentPage({ params: { docId } }: props) {
       </p>
     );
   return (
-    <div className="pt-14 ">
+    <div className="pt-14">
       <DocNavBar document={fetchDoc} />
       <DocContent document={fetchDoc} />
     </div>

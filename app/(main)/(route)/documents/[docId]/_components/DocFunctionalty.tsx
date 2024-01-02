@@ -61,7 +61,9 @@ function DocFunctionally({ document }: props) {
   };
   const copyHandle = () => {
     setIscCopied(true);
-    navigator.clipboard.writeText(`/preview/${document._id}`);
+    navigator.clipboard.writeText(
+      `https://note-taking-tan.vercel.app/preview/${document._id}`
+    );
     setTimeout(() => {
       setIscCopied(false);
     }, 3000);
@@ -116,7 +118,7 @@ function DocFunctionally({ document }: props) {
             </div>
             <div className="flex rounded-lg overflow-hidden items-stretch">
               <div className="p-2 bg-gray-200/60 border w-[256px] text-gray-900 text-ellipsis overflow-hidden whitespace-nowrap ">
-                {`/preview/${document._id}`}
+                {`https://note-taking-tan.vercel.app/preview/${document._id}`}
               </div>
               <div
                 onClick={copyHandle}

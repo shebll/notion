@@ -5,6 +5,7 @@ import NameDoc from "./NameDoc";
 import UploadImage from "./UploadImage";
 import Cover from "./Cover";
 import Editor from "./Editor";
+
 type props = {
   document: {
     _id: Id<"documents">;
