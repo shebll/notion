@@ -1,21 +1,29 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Feature from "./Feature";
 import SearchPopUp from "../_PopUpModel/SearchPopUp";
+import { useActiveFeature } from "@/hocks/use-activeFeature";
 
-type props = {
-  activeFeature: string;
-};
-function Search({ activeFeature }: props) {
+function Search() {
+  const { activeFeature, setActiveFeature } = useActiveFeature(
+    (state) => state
+  );
   const PopupRef = useRef<React.ElementRef<"div">>(null);
   const PopUpHandle = () => {
     PopupRef.current!.style.transform = "scale(1)";
     PopupRef.current!.parentElement!.style.display = "flex";
     document.body.style.opacity = "0px";
   };
-  if (activeFeature == "f") {
-    PopUpHandle();
-  }
+  const closePopup = () => {
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+    setActiveFeature("");
+  };
+  useEffect(() => {
+    if (activeFeature === "f") {
+      PopUpHandle();
+    }
+  }, [activeFeature]);
   return (
     <div>
       <Feature
@@ -24,7 +32,7 @@ function Search({ activeFeature }: props) {
         text={"Find Doc"}
         letter="F"
       />
-      <SearchPopUp PopupRef={PopupRef} />
+      <SearchPopUp PopupRef={PopupRef} closePopup={closePopup} />
     </div>
   );
 }

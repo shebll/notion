@@ -5,13 +5,9 @@ import Themes from "@/components/Themes";
 
 type props = {
   PopupRef: RefObject<HTMLDivElement>;
+  closePopup: () => void;
 };
-function SettingsPopUp({ PopupRef }: props) {
-  const closePopup = () => {
-    PopupRef.current!.style.transform = "scale(0)";
-    PopupRef.current!.parentElement!.style.display = "none";
-  };
-
+function SettingsPopUp({ PopupRef, closePopup }: props) {
   return (
     <div className="w-full h-screen backdrop-blur-[2px] fixed inset-0 z-[9999] hidden justify-center items-center p-4">
       <div onClick={closePopup} className="absolute w-full h-full z-0" />

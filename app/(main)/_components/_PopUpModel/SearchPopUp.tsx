@@ -8,18 +8,14 @@ import DocumentItem from "../_SideBarFeatures/DocumentItem";
 
 type props = {
   PopupRef: RefObject<HTMLDivElement>;
+  closePopup: () => void;
 };
-function SearchPopUp({ PopupRef }: props) {
+function SearchPopUp({ PopupRef, closePopup }: props) {
   const getDocuments = useQuery(api.documents.getDocuments);
   const [searchNote, setSearchNote] = useState<string>("");
   const filteredDocuments = getDocuments?.filter((item) => {
     return item.title.toLowerCase().includes(searchNote.toLowerCase());
   });
-
-  const closePopup = () => {
-    PopupRef.current!.style.transform = "scale(0)";
-    PopupRef.current!.parentElement!.style.display = "none";
-  };
 
   return (
     <div className="w-full h-screen backdrop-blur-[2px] fixed inset-0 z-[9999] hidden justify-center items-center">

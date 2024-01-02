@@ -5,20 +5,18 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { RefObject, useState } from "react";
 import { toast } from "sonner";
+import { stateFeature } from "../_SideBarFeatures/types/activeFeature";
 
 type props = {
   PopupRef: RefObject<HTMLDivElement>;
+  closePopup: () => void;
 };
 
-function AddPopUp({ PopupRef }: props) {
+function AddPopUp({ PopupRef, closePopup }: props) {
   const route = useRouter();
   const [noteName, setNoteName] = useState<string>("");
   const create = useMutation(api.documents.create);
 
-  const closePopup = () => {
-    PopupRef.current!.style.transform = "scale(0)";
-    PopupRef.current!.parentElement!.style.display = "none";
-  };
   const createNote = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
     e.preventDefault();

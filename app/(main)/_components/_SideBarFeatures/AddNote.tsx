@@ -2,20 +2,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import Feature from "./Feature";
 import AddPopUp from "../_PopUpModel/AddPopUp";
+import { useActiveFeature } from "@/hocks/use-activeFeature";
 
-type props = {
-  activeFeature: string;
-};
-function AddNote({ activeFeature }: props) {
+function AddNote() {
+  const { activeFeature, setActiveFeature } = useActiveFeature(
+    (state) => state
+  );
+
   const PopupRef = useRef<React.ElementRef<"div">>(null);
   const PopUpHandle = () => {
     PopupRef.current!.style.transform = "scale(1)";
     PopupRef.current!.parentElement!.style.display = "flex";
     document.body.style.opacity = "0px";
   };
-  if (activeFeature === "a") {
-    PopUpHandle();
-  }
+
+  const closePopup = () => {
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+    setActiveFeature("");
+  };
+  useEffect(() => {
+    if (activeFeature === "a") {
+      PopUpHandle();
+    }
+  }, [activeFeature]);
   return (
     <>
       <Feature
@@ -24,7 +34,7 @@ function AddNote({ activeFeature }: props) {
         text={"New Note"}
         letter="a"
       />
-      <AddPopUp PopupRef={PopupRef} />
+      <AddPopUp PopupRef={PopupRef} closePopup={closePopup} />
     </>
   );
 }

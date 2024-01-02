@@ -6,59 +6,40 @@ import Search from "./_SideBarFeatures/Search";
 import DocumentList from "./_SideBarFeatures/DocumentList";
 import Trash from "./_SideBarFeatures/Trash";
 import Settings from "./_SideBarFeatures/Settings";
-
-type stateFeature = "a" | "x" | "f" | "s" | "";
+import { useActiveFeature } from "@/hocks/use-activeFeature";
 
 function SideBarFeatures() {
-  const [activeFeature, setActiveFeature] = useState<stateFeature>("");
-  // const handleShortcut = (letter: string) => {
-  //   switch (letter) {
-  //     case "a":
-  //       setActiveFeature("AddNote");
-  //     case "s":
-  //       setActiveFeature("Settings");
-  //       break;
-  //     case "f":
-  //       setActiveFeature("Search");
-  //       break;
-  //     case "x":
-  //       setActiveFeature("Trash");
-  //       break;
-  //     default:
-  //       setActiveFeature("");
-  //       break;
-  //   }
-  // };
-  // useEffect(() => {
-  //   const handleKeyPress = (event: KeyboardEvent) => {
-  //     if (
-  //       event.ctrlKey &&
-  //       (event.key === "a" ||
-  //         event.key === "x" ||
-  //         event.key === "s" ||
-  //         event.key === "f")
-  //     ) {
-  //       event.preventDefault();
-  //       setActiveFeature(event.key);
-  //     }
-  //   };
-  //   document.addEventListener("keydown", handleKeyPress);
-  //   return () => {
-  //     document.removeEventListener("keydown", handleKeyPress);
-  //   };
-  // }, []);
+  const { setActiveFeature } = useActiveFeature((state) => state);
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (
+        event.ctrlKey &&
+        (event.key === "a" ||
+          event.key === "x" ||
+          event.key === "s" ||
+          event.key === "f")
+      ) {
+        event.preventDefault();
+        setActiveFeature(event.key);
+      }
+    };
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [setActiveFeature]);
 
   return (
     <>
       <UserItem />
-      <AddNote activeFeature={activeFeature} />
-      <Settings activeFeature={activeFeature} />
-      <Search activeFeature={activeFeature} />
+      <AddNote />
+      <Settings />
+      <Search />
       <hr className="h-1 bg-black/5" />
       <DocumentList />
       <hr className="h-1 bg-black/5" />
-      <AddNote activeFeature={activeFeature} />
-      <Trash activeFeature={activeFeature} />
+      <AddNote />
+      <Trash />
     </>
   );
 }

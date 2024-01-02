@@ -1,22 +1,29 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Feature from "./Feature";
-import SearchPopUp from "../_PopUpModel/SearchPopUp";
 import SettingsPopUp from "../_PopUpModel/SettingsPopUp";
+import { useActiveFeature } from "@/hocks/use-activeFeature";
 
-type props = {
-  activeFeature: string;
-};
-function Settings({ activeFeature }: props) {
+function Settings() {
+  const { activeFeature, setActiveFeature } = useActiveFeature(
+    (state) => state
+  );
   const PopupRef = useRef<React.ElementRef<"div">>(null);
   const PopUpHandle = () => {
     PopupRef.current!.style.transform = "scale(1)";
     PopupRef.current!.parentElement!.style.display = "flex";
     document.body.style.opacity = "0px";
   };
-  if (activeFeature == "s") {
-    PopUpHandle();
-  }
+  const closePopup = () => {
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+    setActiveFeature("");
+  };
+  useEffect(() => {
+    if (activeFeature === "s") {
+      PopUpHandle();
+    }
+  }, [activeFeature]);
   return (
     <>
       <Feature
@@ -25,7 +32,7 @@ function Settings({ activeFeature }: props) {
         text={"Setting"}
         letter="s"
       />
-      <SettingsPopUp PopupRef={PopupRef} />
+      <SettingsPopUp PopupRef={PopupRef} closePopup={closePopup} />
     </>
   );
 }

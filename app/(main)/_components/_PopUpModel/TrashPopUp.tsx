@@ -8,19 +8,15 @@ import { useQuery } from "convex/react";
 import DocumentItem from "../_SideBarFeatures/DocumentItem";
 type props = {
   PopupRef: RefObject<HTMLDivElement>;
+  closePopup: () => void;
 };
-function TrashPopUp({ PopupRef }: props) {
+function TrashPopUp({ PopupRef, closePopup }: props) {
   const getTrash = useQuery(api.documents.getTrash);
 
   const [searchNote, setSearchNote] = useState<string>("");
   const filteredDocuments = getTrash?.filter((item) => {
     return item.title.toLowerCase().includes(searchNote.toLowerCase());
   });
-
-  const closePopup = () => {
-    PopupRef.current!.style.transform = "scale(0)";
-    PopupRef.current!.parentElement!.style.display = "none";
-  };
   return (
     <div className="w-full h-screen backdrop-blur-[2px] fixed inset-0 z-[9999] hidden justify-center items-center">
       <div onClick={closePopup} className="absolute w-full h-full z-0" />
