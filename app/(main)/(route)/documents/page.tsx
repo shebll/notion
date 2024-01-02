@@ -3,23 +3,24 @@ import Image from "next/image";
 import React, { ElementRef, useRef, useState } from "react";
 
 import { useUser } from "@clerk/clerk-react";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import AddPopUp from "../../_components/_PopUpModel/AddPopUp";
+import { useActiveFeature } from "@/hocks/use-activeFeature";
 
 function Documents() {
   const PopupRef = useRef<ElementRef<"div">>(null);
-  const [noteName, setNoteName] = useState<string>("");
-
+  const setActiveFeature = useActiveFeature((state) => state.setActiveFeature);
   const { user } = useUser();
-  const create = useMutation(api.documents.create);
 
   const PopUpHandle = () => {
     PopupRef.current!.style.transform = "scale(1)";
     PopupRef.current!.parentElement!.style.display = "flex";
     document.body.style.opacity = "0px";
   };
-
+  const closePopup = () => {
+    PopupRef.current!.style.transform = "scale(0)";
+    PopupRef.current!.parentElement!.style.display = "none";
+    setActiveFeature("");
+  };
   return (
     <>
       <div className="h-screen flex justify-center items-center flex-col gap-8">
@@ -48,7 +49,7 @@ function Documents() {
           </div>
         </div>
       </div>
-      <AddPopUp PopupRef={PopupRef} />
+      <AddPopUp PopupRef={PopupRef} closePopup={closePopup} />
     </>
   );
 }
