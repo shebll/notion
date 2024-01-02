@@ -4,7 +4,7 @@ type useTile = {
   setTitle: (value: string) => void;
 };
 export const useTitle = create<useTile>((set) => ({
-  title: "hi",
+  title: "",
   setTitle: (value: string) => {
     set({ title: value });
   },

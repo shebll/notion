@@ -49,9 +49,12 @@ function NameDoc({ docIcon, docId, docTitle, size }: props) {
   };
   const unFocusHandle = () => {
     setIsEditing(false);
+    if (title.trim().length == 0) {
+      setTitle("unnamed");
+    }
     updateNote({
       documentId: docId,
-      title: title || "unnamed",
+      title: title,
     });
   };
   const onEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
