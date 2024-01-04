@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import Feature from "./Feature";
 import SettingsPopUp from "../_PopUpModel/SettingsPopUp";
-import { useActiveFeature } from "@/hocks/use-activeFeature";
+import { useActiveFeature } from "@/hooks/use-activeFeature";
 
 function Settings() {
   const { activeFeature, setActiveFeature } = useActiveFeature(

@@ -4,7 +4,7 @@ import React, { ElementRef, useRef, useState } from "react";
 
 import { useUser } from "@clerk/clerk-react";
 import AddPopUp from "../../_components/_PopUpModel/AddPopUp";
-import { useActiveFeature } from "@/hocks/use-activeFeature";
+import { useActiveFeature } from "@/hooks/use-activeFeature";
 
 function Documents() {
   const PopupRef = useRef<ElementRef<"div">>(null);

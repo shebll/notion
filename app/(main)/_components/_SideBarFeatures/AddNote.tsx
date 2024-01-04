@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Feature from "./Feature";
 import AddPopUp from "../_PopUpModel/AddPopUp";
-import { useActiveFeature } from "@/hocks/use-activeFeature";
+import { useActiveFeature } from "@/hooks/use-activeFeature";
 
 function AddNote() {
   const { activeFeature, setActiveFeature } = useActiveFeature(

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Logo from "./logo";
 
-import { useScrollTop } from "@/hocks/use-scroll-top";
+import { useScrollTop } from "@/hooks/use-scroll-top";
 import { useConvexAuth } from "convex/react";
 import { SignInButton, UserButton } from "@clerk/clerk-react";
 

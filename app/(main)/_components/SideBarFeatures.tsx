@@ -6,7 +6,7 @@ import Search from "./_SideBarFeatures/Search";
 import DocumentList from "./_SideBarFeatures/DocumentList";
 import Trash from "./_SideBarFeatures/Trash";
 import Settings from "./_SideBarFeatures/Settings";
-import { useActiveFeature } from "@/hocks/use-activeFeature";
+import { useActiveFeature } from "@/hooks/use-activeFeature";
 
 function SideBarFeatures() {
   const { setActiveFeature } = useActiveFeature((state) => state);

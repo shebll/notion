@@ -6,7 +6,7 @@ import { useMutation } from "convex/react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import React, { ElementRef, useEffect, useRef, useState } from "react";
-import { useTitle } from "@/hocks/use-title";
+import { useTitle } from "@/hooks/use-title";
 type props = {
   docIcon: string;
   docTitle: string;

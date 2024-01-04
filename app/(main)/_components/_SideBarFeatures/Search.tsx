@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Feature from "./Feature";
 import SearchPopUp from "../_PopUpModel/SearchPopUp";
-import { useActiveFeature } from "@/hocks/use-activeFeature";
+import { useActiveFeature } from "@/hooks/use-activeFeature";
 
 function Search() {
   const { activeFeature, setActiveFeature } = useActiveFeature(

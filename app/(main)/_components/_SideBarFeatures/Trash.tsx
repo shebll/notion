@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TrashPopUp from "../_PopUpModel/TrashPopUp";
 import Feature from "./Feature";
 import { stateFeature } from "./types/activeFeature";
-import { useActiveFeature } from "@/hocks/use-activeFeature";
+import { useActiveFeature } from "@/hooks/use-activeFeature";
 
 function Trash() {
   const { activeFeature, setActiveFeature } = useActiveFeature(
