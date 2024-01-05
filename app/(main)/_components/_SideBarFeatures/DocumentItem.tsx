@@ -42,6 +42,7 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
   const [expand, setExpand] = useState<expandType[]>([
     { documentId: "", expanded: false },
   ]);
+
   const onExpand = (documentId: string) => {
     const existingItem = expand.find((item) => item.documentId === documentId);
     if (existingItem) {
@@ -99,11 +100,12 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
       ]);
     }
     promise.then((data) => {
-      router.push(`/documents/${data}`);
+      handleClick(data);
     });
   };
   const deleteNote = (documentId: Id<"documents">) => {
-    router.push(`/documents/${documentId}`);
+    handleClick(documentId);
+
     if (!documentId) return;
     const promise = archive({ documentId });
     toast.promise(promise, {
@@ -145,10 +147,7 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
           style={{ paddingLeft: `${level * 20 + 12}px` }}
           className="flex justify-between py-1 px-[12px]"
         >
-          <div
-            onClick={() => handleClick(document._id as string)}
-            className="flex flex-row gap-1 items-center w-full max-w-[calc(100%-72px)] "
-          >
+          <div className="flex flex-row gap-1 items-center w-full max-w-[calc(100%-72px)] ">
             {List && (
               <div
                 onClick={() => onExpand(document._id)}
@@ -167,22 +166,15 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
                 />
               </div>
             )}
-
-            {document.icon ? (
-              <div className="">{document.icon}</div>
-            ) : (
-              <div className="">
-                <Image
-                  src={"/file-light.png"}
-                  alt="file"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            )}
-            <h1 className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">
-              {document.title}
-            </h1>
+            <div
+              onClick={() => handleClick(document._id as string)}
+              className="flex flex-row gap-1 items-center w-[calc(100%-28px)]"
+            >
+              {document.icon && <div className="">{document.icon}</div>}
+              <h1 className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">
+                {document.title}
+              </h1>
+            </div>
           </div>
           <div className="flex gap-1 items-center ">
             {List && (
