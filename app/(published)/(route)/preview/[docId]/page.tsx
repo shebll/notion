@@ -7,7 +7,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import Link from "next/link";
 import React from "react";
-import ContentDoc from "./contentDoc";
+import ContentDoc from "../../../_components/contentDoc";
 
 type props = {
   params: { docId: string };
