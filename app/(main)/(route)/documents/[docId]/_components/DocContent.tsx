@@ -22,7 +22,7 @@ type props = {
 };
 function DocContent({ document }: props) {
   return (
-    <div>
+    <div className="h-[calc(100vh-94px)] overflow-y-scroll dark:bg-[#1F1F1F] dark:text-white text-slate-900 bg-white">
       {document.coverImage && (
         <Cover docId={document._id} coverImage={document.coverImage} />
       )}

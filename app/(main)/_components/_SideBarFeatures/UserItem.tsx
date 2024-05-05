@@ -9,7 +9,7 @@ function UserItem() {
   const { user } = useUser();
   return (
     <div className="p-2">
-      <div className="py-2 px-4 bg-gray-100 hover:bg-gray-100 rounded-md shadow-md flex flex-col gap-2 w-[calc(100%-35px);] text-gray-700">
+      <div className="py-2 px-4 bg-gray-100 hover:bg-gray-100 dark:bg-[#474747] dark:hover:bg-[#4e4e4e] dark:text-white rounded-md shadow-md flex flex-col gap-2 w-[calc(100%-35px);] text-gray-700">
         <div className="flex justify-between items-center flex-row">
           <div className="flex flex-row gap-2 items-center ">
             <Image
@@ -33,11 +33,11 @@ function UserItem() {
             />
           </button>
         </div>
-        <hr />
         <div
           className={`
-        ${toggle ? "flex" : "hidden"} flex-col gap-2 items-start `}
+          ${toggle ? "flex" : "hidden"} flex-col gap-2 items-start `}
         >
+          <hr />
           <h2 className="font-medium">
             {user?.emailAddresses[0].emailAddress}
           </h2>

@@ -142,7 +142,7 @@ function DocumentItem({ document, level, Trash, List, Search }: props) {
   };
   return (
     <div>
-      <div className="hover:bg-gray-300 focus:bg-gray-300 transition-all cursor-pointer">
+      <div className="hover:bg-gray-300 dark:hover:bg-[#575757] focus:bg-gray-300 transition-all cursor-pointer">
         <div
           style={{ paddingLeft: `${level * 20 + 12}px` }}
           className="flex justify-between py-1 px-[12px]"

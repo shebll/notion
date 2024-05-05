@@ -122,16 +122,29 @@ function Navigation() {
     <>
       <aside
         ref={sideBarRef}
-        className={`group/sidebar h-full bg-gray-200 flex flex-col w-64 z-[9999] gap-0  overflow-y-auto relative
+        className={`group/sidebar dark:bg-[#3a3a3a] dark:text-white text-slate-900  h-full bg-gray-200 flex flex-col w-64 z-[9999] gap-0  overflow-y-auto relative
         ${isMobile && "w-0"}${isResetting && "transition-all duration-500"} `}
       >
         <span
           onClick={collapseHandle}
           role="button"
-          className={`p-2 hover:bg-gray-300 rounded-md hover:shadow-lg w-fit absolute right-2 top-[10px] transition opacity-0 group-hover/sidebar:opacity-[1]
+          className={`p-2 hover:bg-gray-300 dark:bg-[#444444] rounded-md hover:shadow-lg w-fit absolute right-2 top-[10px] transition opacity-0 group-hover/sidebar:opacity-[1]
           ${isMobile && "opacity-[1]"}`}
         >
-          <Image src={"/arrow-light.png"} alt="arrow" width={14} height={14} />
+          <Image
+            src={"/arrow-light.png"}
+            alt="arrow"
+            width={14}
+            height={14}
+            className=" block dark:hidden"
+          />
+          <Image
+            src={"/arrow-dark.png"}
+            alt="arrow"
+            width={14}
+            height={14}
+            className="hidden dark:block"
+          />
         </span>
         <SideBarFeatures />
         <div
@@ -139,17 +152,17 @@ function Navigation() {
           onMouseDown={(e) => {
             !isMobile && handleMouseDown(e);
           }}
-          className={`absolute w-1 h-full bg-gray-300 transition-all opacity-0 right-0 top-0 group-hover/sidebar:opacity-[1] cursor-ew-resize
+          className={`absolute w-1 h-full bg-gray-300 dark:bg-[#494949] transition-all opacity-0 right-0 top-0 group-hover/sidebar:opacity-[1] cursor-ew-resize
           ${isResetting && "transition-all duration-500"} `}
         />
       </aside>
       <div
         ref={navBarRef}
-        className={`absolute top-0  p-4 flex justify-between items-center
+        className={`absolute top-0  p-4 flex justify-between items-center dark:bg-[#1F1F1F] dark:text-white text-slate-900 bg-white
         ${isMobile ? "w-full left-0" : "left-[256px] w-[calc(100%-256px)]"}
         ${isResetting && "transition-all duration-500"}  `}
       >
-        <nav className="flex  items-center gap-4">
+        <nav className="flex  items-center gap-4 ">
           {isCollapse && (
             <span role="button" onClick={openHandle} className="">
               <Image

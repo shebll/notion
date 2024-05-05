@@ -52,6 +52,7 @@ function Themes() {
       detectTheme();
     }
   }, []);
+  console.log(theme);
   return (
     <div>
       <button onClick={themeToggleHandle}>

@@ -20,8 +20,8 @@ type props = {
 };
 function DocNavBar({ document }: props) {
   return (
-    <div className="w-full flex flex-col items-center relative gap-2">
-      <div className="w-full flex justify-between items-center px-4  ">
+    <div className="w-full flex flex-col items-center relative gap-2 shadow-lg z-50 dark:bg-[#1F1F1F] dark:text-white text-slate-900 bg-white ">
+      <div className="w-full flex justify-between items-center px-4 py-1 ">
         <NameDoc
           docIcon={document.icon!}
           docId={document._id}
