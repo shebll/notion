@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { RefObject, useState } from "react";
 import { toast } from "sonner";
-import { stateFeature } from "../_SideBarFeatures/types/activeFeature";
 
 type props = {
   PopupRef: RefObject<HTMLDivElement>;

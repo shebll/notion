@@ -1,4 +1,4 @@
-import { stateFeature } from "@/app/(main)/_components/_SideBarFeatures/types/activeFeature";
+import { stateFeature } from "@/app/types/activeFeature";
 import { create } from "zustand";
 
 type useActiveFeatureType = {

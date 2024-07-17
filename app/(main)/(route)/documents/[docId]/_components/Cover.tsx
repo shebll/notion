@@ -54,7 +54,7 @@ function Cover({ coverImage, docId }: props) {
         src={coverImage}
         alt="cover"
         width={1600}
-        height={300}
+        height={400}
         className="object-cover w-full"
       />
       <div className="transition-all absolute right-4 bottom-5 flex  gap-4 items-center">
