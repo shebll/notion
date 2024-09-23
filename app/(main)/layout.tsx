@@ -23,7 +23,7 @@ export default function MainLayout({
     <main className="flex flex-row h-screen w-full ">
       <Navigation />
       <EdgeStoreProvider>
-        <div className="flex-1 ">{children}</div>
+        <div className="flex-1 overflow-y-auto">{children}</div>
       </EdgeStoreProvider>
     </main>
   );
